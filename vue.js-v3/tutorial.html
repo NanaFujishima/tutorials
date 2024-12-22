@@ -4,6 +4,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
   </head>
   <body>
+    <style>
+      .blue {
+        color: blue;
+      }
+      .red {
+        color: red;
+      }
+    </style>
     <div id="app1">app1: {{ message }}</div>
     <div id="app2">
       <p>{{ count }}回クリックしました</p>
@@ -11,12 +19,15 @@
     </div>
     <div id="app3">
       <span v-if="seen">hogehoge</span>
+      <button v-on:click="off">表示OFF</button>
+    </div>
+    <div id="app4">
+      <p class="{{ class4}}">{{class4}}です</p>
     </div>
 
     <script>
       /*
-      {{ message }}で動的な文字列を代入
-      
+        {{ message }}で文字列を動的に操作
       */
       const App1 = {
         data() {
@@ -25,6 +36,11 @@
           };
         },
       };
+      /*
+        クリックイベントは v-on:cleck="eventname" とする
+        クリックイベントのロジックは、methods: eventname: function() に書く
+        メソッドからdataの属性(count)を操作する場合はthis.を使う
+      */
       const App2 = {
         data() {
           return {
@@ -37,11 +53,21 @@
           },
         },
       };
+      /*
+        if文はv-ifを使う
+        seem: trueの場合、hogehogeと表示する
+        seem: falseの場合、hogehogeは表示しない
+      */
       const App3 = {
         data() {
           return {
             seen: true,
           };
+        },
+        methods: {
+          off: function () {
+            this.seen = false;
+          },
         },
       };
 
@@ -54,4 +80,3 @@
     </script>
   </body>
 </html>
-
