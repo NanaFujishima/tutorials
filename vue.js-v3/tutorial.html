@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  </head>
+  <body>
+    <div id="app1">app1: {{ message }}</div>
+    <div id="app2">
+      <p>{{ count }}回クリックしました</p>
+      <button v-on:click="increment">カウントを増やす</button>
+    </div>
+    <div id="app3">
+      <span v-if="seen">hogehoge</span>
+    </div>
+
+    <script>
+      /*
+      {{ message }}で動的な文字列を代入
+      
+      */
+      const App1 = {
+        data() {
+          return {
+            message: "Hello World!",
+          };
+        },
+      };
+      const App2 = {
+        data() {
+          return {
+            count: 0,
+          };
+        },
+        methods: {
+          increment: function () {
+            this.count += 1;
+          },
+        },
+      };
+      const App3 = {
+        data() {
+          return {
+            seen: true,
+          };
+        },
+      };
+
+      app1 = Vue.createApp(App1);
+      app2 = Vue.createApp(App2);
+      app3 = Vue.createApp(App3);
+      app1.mount("#app1");
+      app2.mount("#app2");
+      app3.mount("#app3");
+    </script>
+  </body>
+</html>
+
