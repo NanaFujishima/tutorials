@@ -12,23 +12,64 @@
         color: red;
       }
     </style>
+
+    <!--
+        {{ message }}で文字列を動的に操作
+    -->
     <div id="app1">app1: {{ message }}</div>
+
+    <!--
+        クリックイベントは v-on:cleck="eventname" とする
+        クリックイベントのロジックは、methods: eventname: function() に書く
+        メソッドからdataの属性(count)を操作する場合はthis.を使う
+    -->
     <div id="app2">
       <p>{{ count }}回クリックしました</p>
       <button v-on:click="increment">カウントを増やす</button>
     </div>
+
+    <!--
+      if文はv-ifを使う
+      seem: trueの場合、hogehogeと表示する
+      seem: falseの場合、hogehogeは表示しない
+      -->
+
     <div id="app3">
-      <span v-if="seen">hogehoge</span>
+      <span v-if="seen">hoge</span>
       <button v-on:click="off">表示OFF</button>
     </div>
+
+    <!--
+      html属性は展開されず以下結果となる
+      ソース：<p class="{{class4}}">blueです</p>
+      ブラウザの表示：blueです
+    -->
     <div id="app4">
       <p class="{{ class4}}">{{class4}}です</p>
     </div>
 
+    <!--
+      html要素のclassを指定する場合、v-bindを使用する
+    -->
+    <div id="app5">
+      <p v-bind:class="class5">hogehoge</p>
+
+      <!--省略記法(どちらも同じ意味)-->
+      <p :class="class5">hogehoge2</p>
+    </div>
+
+    <!--
+      ループ処理はv-forを使用する
+      * ul...リスト要素(点のみで順番を意識しない)
+      * li...リスト要素(リスト番号を自動採番)
+    -->
+    <div id="app6">
+      <ul>
+        <li v-for="todo in todos">{{todo.text}}</li>
+      </ul>
+    </div>
+
     <script>
-      /*
-        {{ message }}で文字列を動的に操作
-      */
       const App1 = {
         data() {
           return {
@@ -36,11 +77,7 @@
           };
         },
       };
-      /*
-        クリックイベントは v-on:cleck="eventname" とする
-        クリックイベントのロジックは、methods: eventname: function() に書く
-        メソッドからdataの属性(count)を操作する場合はthis.を使う
-      */
+
       const App2 = {
         data() {
           return {
@@ -53,11 +90,7 @@
           },
         },
       };
-      /*
-        if文はv-ifを使う
-        seem: trueの場合、hogehogeと表示する
-        seem: falseの場合、hogehogeは表示しない
-      */
+
       const App3 = {
         data() {
           return {
@@ -71,12 +104,42 @@
         },
       };
 
+      const App4 = {
+        data() {
+          return {
+            class4: "blue",
+          };
+        },
+      };
+
+      const App5 = {
+        data() {
+          return {
+            class5: "blue",
+          };
+        },
+      };
+
+      const App6 = {
+        data() {
+          return {
+            todos: [{ text: "PHP" }, { text: "Ruby" }, { text: "Python" }],
+          };
+        },
+      };
+
       app1 = Vue.createApp(App1);
       app2 = Vue.createApp(App2);
       app3 = Vue.createApp(App3);
+      app4 = Vue.createApp(App4);
+      app5 = Vue.createApp(App5);
+      app6 = Vue.createApp(App6);
       app1.mount("#app1");
       app2.mount("#app2");
       app3.mount("#app3");
+      app4.mount("#app4");
+      app5.mount("#app5");
+      app6.mount("#app6");
     </script>
   </body>
 </html>
