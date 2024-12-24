@@ -65,8 +65,39 @@
     -->
     <div id="app6">
       <ul>
-        <li v-for="todo in todos">{{todo.text}}</li>
+        <li v-for="todo in todos">{{ todo.text }}</li>
       </ul>
+    </div>
+
+    <!--
+      部品化（component）はtemplateプロパティを使う
+      * template...vue.jsでHTMLテンプレート文字列を指定する際に使用
+      template(1つ)を定義すれば、いくつでも再利用できる
+    -->
+    <div id="app7">
+      <ul>
+        <template7></template7>
+        <template7></template7>
+        <template7></template7>
+      </ul>
+    </div>
+
+    <!--
+      propでは部品内に値を代入し部品化（component）することが可能
+      * :prop8 はv-bindの省略形
+    -->
+    <div id="app8">
+      <ul>
+        <!-- 静的な文字列-->
+        <template8 prop8="次へ"></template8>
+        <!-- 動的な文字列-->
+        <template8 :prop8="varString"></template8>
+      </ul>
+    </div>
+
+    <div id="app9">
+      <template9 v-for="item in itemList" :prop1="item" prop2="です">
+      </template9>
     </div>
 
     <script>
@@ -128,18 +159,65 @@
         },
       };
 
-      app1 = Vue.createApp(App1);
-      app2 = Vue.createApp(App2);
-      app3 = Vue.createApp(App3);
-      app4 = Vue.createApp(App4);
-      app5 = Vue.createApp(App5);
-      app6 = Vue.createApp(App6);
-      app1.mount("#app1");
-      app2.mount("#app2");
-      app3.mount("#app3");
-      app4.mount("#app4");
-      app5.mount("#app5");
-      app6.mount("#app6");
+      const App7 = {
+        components: {
+          template7: {
+            template: `
+          <button>App7のボタンです</button>
+          <br>
+        `,
+          },
+        },
+      };
+
+      const App8 = {
+        data() {
+          return {
+            varString: "Hello!",
+          };
+        },
+        components: {
+          template8: {
+            props: ["prop8"],
+            template: `
+              <button> {{prop8}} </button>
+              <br>
+            `,
+          },
+        },
+      };
+
+      const App9 = {
+        data() {
+          return {
+            itemList: [
+              { id: 0, text: "0番" },
+              { id: 1, text: "1番" },
+              { id: 2, text: "2番" },
+            ],
+          };
+        },
+
+        components: {
+          template9: {
+            props: ["prop1", "prop2"],
+            template: `
+              <li>{{ prop1.id }}は{{ prop1.text }}{{ prop2 }}</li>
+            `,
+          },
+        },
+      };
+
+      // Vueインスタンスをそれぞれマウント
+      Vue.createApp(App1).mount("#app1");
+      Vue.createApp(App2).mount("#app2");
+      Vue.createApp(App3).mount("#app3");
+      Vue.createApp(App4).mount("#app4");
+      Vue.createApp(App5).mount("#app5");
+      Vue.createApp(App6).mount("#app6");
+      Vue.createApp(App7).mount("#app7");
+      Vue.createApp(App8).mount("#app8");
+      Vue.createApp(App9).mount("#app9");
     </script>
   </body>
 </html>
